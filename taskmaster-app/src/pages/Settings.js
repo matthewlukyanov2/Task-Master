@@ -18,6 +18,18 @@ function Settings() {
         </label>
       </section>
 
+      <section>
+        <h3>🎨 App Appearance</h3>
+        <label>
+          Theme:
+          <select>
+            <option>Light</option>
+            <option>Dark</option>
+            <option>System Default</option>
+          </select>
+        </label>
+      </section>
+
       </div>
     );
   }
