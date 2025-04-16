@@ -1,30 +1,38 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaCog } from 'react-icons/fa';
+import '../styles/Home.css';
 
 function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="home-page" style={{ padding: "1rem", backgroundColor: "#add8e6", minHeight: "100vh" }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ fontFamily: 'cursive' }}>TaskMaster</h1>
-        <FaCog onClick={() => navigate('/settings')} style={{ cursor: 'pointer' }} />
-      </div>
-      
+    <div className="home-container">
+  <div className="home-wrapper">
+    <header className="home-header">
+      <h1>TaskMaster</h1>
+      <button className="settings-icon" onClick={() => navigate('/settings')}>⚙️</button>
+    </header>
+
+    <main className="home-main">
       <h2>Welcome to the TaskMaster App!</h2>
       <p>Where your tasks are kept tidy and concise</p>
 
-      <button onClick={() => navigate('/login')}>Log in ➤</button>
-      <br /><br />
-      <button onClick={() => navigate('/register')}>Register ➤</button>
+      <div className="home-buttons">
+        <button onClick={() => navigate('/login')}>Log in ▶</button>
+        <button onClick={() => navigate('/register')}>Register ▶</button>
+      </div>
+    </main>
 
-      <footer style={{ marginTop: "3rem" }}>
-        <h3>Task Master ✅</h3>
-        <p>For queries or problems, email us at <a href="mailto:taskmaster@gmail.com">taskmaster@gmail.com</a> 😊</p>
-      </footer>
-    </div>
+    <footer className="home-footer">
+      <h3>Task Master ✅</h3>
+      <p>For queries or problems, email us at <a href="mailto:taskmaster@gmail.com">taskmaster@gmail.com</a> 😊</p>
+    </footer>
+  </div>
+</div>
+
   );
 }
 
 export default Home;
+
+

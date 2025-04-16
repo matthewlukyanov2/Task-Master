@@ -25,6 +25,8 @@ const Login = () => {
   
     return (
       <div className="login-container">
+        <div className="login-wrapper">
+        <button onClick={() => navigate('/')} style={{ marginBottom: "1rem" }}>← Back</button>
         <h1 className="logo">TaskMaster</h1>
         <form className="login-form" onSubmit={handleLogin}>
           <label>Email / Username</label>
@@ -67,6 +69,7 @@ const Login = () => {
   
           <button type="submit">Login</button>
         </form>
+      </div>
       </div>
     );
   };
