@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "../firebase";
 import '../styles/Login.css'; 
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
     const [error, setError] = useState('');
   
     const navigate = useNavigate();
-    const auth = getAuth();
+    //const auth = getAuth();
   
     const handleLogin = async (e) => {
       e.preventDefault();
