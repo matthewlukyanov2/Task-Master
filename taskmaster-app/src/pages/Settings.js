@@ -1,38 +1,29 @@
-function Settings() {
-    return (
-      <div className="settings-page">
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Settings.css';
+
+const Settings = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="settings-container">
+      <div className="settings-wrapper">
+        <div className="settings-header">
+          <h1 className="logo">TaskMaster</h1>
+          <button className="back-button" onClick={() => navigate('/')}>←</button>
+        </div>
+
         <h2>Settings</h2>
-  
-        <section>
-          <h3>👤 Account Settings</h3>
-          <p>Change email / password</p>
-        </section>
-
-        <section>
-        <h3>🔔 Notification Preferences</h3>
-        <label>
-          <input type="checkbox" /> Email Reminders
-        </label><br />
-        <label>
-          <input type="checkbox" /> Push Notifications
-        </label>
-      </section>
-
-      <section>
-        <h3>🎨 App Appearance</h3>
-        <label>
-          Theme:
-          <select>
-            <option>Light</option>
-            <option>Dark</option>
-            <option>System Default</option>
-          </select>
-        </label>
-      </section>
-
+        <ul className="settings-list">
+          <li onClick={() => navigate('/settings/account')}>Account settings</li>
+          <li onClick={() => navigate('/settings/notifications')}>Notification preferences</li>
+          <li onClick={() => navigate('/settings/appearance')}>Appearances</li>
+        </ul>
       </div>
-    );
-  }
+    </div>
+  );
+};
 
-  export default Settings;
+export default Settings;
+
   
