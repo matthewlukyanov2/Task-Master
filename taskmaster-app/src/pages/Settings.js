@@ -15,9 +15,9 @@ const Settings = () => {
 
         <h2>Settings</h2>
         <ul className="settings-list">
-          <li onClick={() => navigate('/settings/account')}>Account settings</li>
-          <li onClick={() => navigate('/settings/notifications')}>Notification preferences</li>
-          <li onClick={() => navigate('/settings/appearance')}>Appearances</li>
+        <li onClick={() => navigate('/settings/account')}>Account settings</li>
+        <li onClick={() => navigate('/settings/notifications')}>Notification preferences</li>
+       <li onClick={() => navigate('/settings/appearance')}>Appearances</li>
         </ul>
       </div>
     </div>
