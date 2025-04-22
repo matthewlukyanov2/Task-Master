@@ -41,7 +41,8 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-wrapper">
-        <button onClick={() => navigate('/')} className="back-button">← Back</button>
+        
+        <button onClick={() => navigate('/')} style={{ marginBottom: "1rem" }}>← Back</button>
         <h1 className="logo">TaskMaster</h1>
         <h3>Create your account!</h3>
 
