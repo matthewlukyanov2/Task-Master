@@ -4,10 +4,23 @@ import "../styles/Settings.css";
 function Appearance() {
   const [yellowMode, setYellowMode] = useState(false);
   const [fontStyle, setFontStyle] = useState("Calibri");
+  const [profilePic, setProfilePic] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setProfilePic(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <div className="settings-container">
-      <div className="settings-wrapper">
+      <div className="settings-wrapper"
+      style={{
+        backgroundColor: yellowMode ? "#fffacd" : "#add8e6", // Light yellow or light blue
+        fontFamily: fontStyle,
+      }}
+      >
         <div className="settings-header">
           <h2 className="logo">TaskMaster</h2>
           <button className="back-button" onClick={() => window.history.back()}>
@@ -20,7 +33,7 @@ function Appearance() {
           <h3>App Appearances</h3>
 
           <div className="setting-row">
-            <label>Yellow mode</label>
+            <label>Light mode</label>
             <label className="switch">
               <input
                 type="checkbox"
@@ -48,7 +61,28 @@ function Appearance() {
 
           <div className="setting-row">
             <label>Profile Picture</label>
-            <span role="img" aria-label="user-icon" className="profile-icon">👤</span>
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                id="profile-upload"
+                style={{ display: "none" }}
+                onChange={handleImageUpload}
+              />
+              <label htmlFor="profile-upload" className="profile-upload-label">
+                {profilePic ? (
+                  <img
+                    src={profilePic}
+                    alt="Profile Preview"
+                    className="profile-preview"
+                  />
+                ) : (
+                  <span role="img" aria-label="user-icon" className="profile-icon">
+                    👤
+                  </span>
+                )}
+              </label>
+            </div>
           </div>
         </div>
       </div>

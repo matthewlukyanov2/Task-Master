@@ -151,4 +151,22 @@
   .profile-icon {
     font-size: 24px;
   }
+
+  .profile-upload-label {
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .profile-icon {
+    font-size: 28px;
+  }
+  
+  .profile-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black;
+  }
+  
   
