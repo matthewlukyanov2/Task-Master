@@ -1,16 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Settings.css';
 
 const Settings = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
 
   return (
     <div className="settings-container">
       <div className="settings-wrapper">
         <div className="settings-header">
           <h1 className="logo">TaskMaster</h1>
-          <button className="back-button" onClick={() => navigate('/')}>←</button>
+          <button className="back-button" onClick={() => navigate(from)}>←</button>
         </div>
 
         <h2>Settings</h2>

@@ -18,7 +18,12 @@ const Dashboard = () => {
       <div className="dashboard-wrapper">
         <div className="dashboard-header">
           <span className="logo">TaskMaster</span>
-          <button className="settings-icon" onClick={() => navigate('/settings')}>⚙️</button>
+          <button
+  className="settings-icon"
+  onClick={() => navigate('/settings', { state: { from: '/dashboard' } })}
+>
+  ⚙️
+</button>
         </div>
 
         <h2 style={{ marginTop: "1.5rem" }}>Welcome back, Matt! <span>⭐</span></h2>
