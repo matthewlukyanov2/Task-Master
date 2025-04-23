@@ -32,6 +32,18 @@ const Dashboard = () => {
     setTasks(updatedTasks);
   };
 
+  const toggleAllTasks = () => {
+    const allCompleted = tasks.every(task => task.completed);
+    const updatedTasks = tasks.map(task => ({
+      ...task,
+      completed: !allCompleted
+    }));
+    setTasks(updatedTasks);
+  };
+  
+  const allTasksCompleted = tasks.length > 0 && tasks.every(task => task.completed);
+
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-wrapper">
@@ -72,9 +84,14 @@ const Dashboard = () => {
           ))}
         </div>
 
-        <p style={{ marginTop: "1rem", color: "#0044cc", textDecoration: "underline", cursor: "pointer" }}>
-          Select All
-        </p>
+        <p
+  onClick={toggleAllTasks}
+  style={{ marginTop: "1rem", color: "#0044cc", textDecoration: "underline", cursor: "pointer" }}
+>
+  {allTasksCompleted ? "Deselect All" : "Select All"}
+</p>
+
+
 
         <div className="add-task-btn">+</div>
       </div>
