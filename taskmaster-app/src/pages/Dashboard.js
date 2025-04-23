@@ -7,6 +7,8 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const [isDeleteMode, setIsDeleteMode] = useState(false);
     const [message, setMessage] = useState(""); // for showing feedback
+    const [fadeOut, setFadeOut] = useState(false);
+
 
 
     // Load from localStorage or use default
@@ -24,8 +26,28 @@ const Dashboard = () => {
 
   //Save to localStorage whenever tasks change
   useEffect(() => {
+    
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    if (message) {
+      // Start fading after 2.5s
+      const fadeTimer = setTimeout(() => setFadeOut(true), 2500);
+  
+      // Clear message after fade finishes
+      const clearTimer = setTimeout(() => {
+        setMessage("");
+        setFadeOut(false);
+      }, 3000);
+  
+      return () => {
+        clearTimeout(fadeTimer);
+        clearTimeout(clearTimer);
+      };
+    }
+  }, [message]);
+  
 
   // Toggle completed status
   const toggleTask = (id) => {
@@ -124,8 +146,9 @@ const Dashboard = () => {
 {isDeleteMode ? (
   <p
     onClick={() => {
-      setIsDeleteMode(false);
-      setMessage("Leave task deletion");
+        setIsDeleteMode(false);
+        setFadeOut(false);
+        setMessage("");
     }}
     style={{ color: "red", textDecoration: "underline", cursor: "pointer" }}
   >
@@ -144,9 +167,13 @@ const Dashboard = () => {
 
 <div className="add-task-btn" onClick={addTask}>+</div>
 {message && (
-  <p style={{ marginTop: "1rem", color: "#444", fontWeight: "bold" }}>{message}</p>
+  <p
+    className={`message ${fadeOut ? "fade-out" : ""}`}
+    style={{ marginTop: "1rem", color: "#444", fontWeight: "bold" }}
+  >
+    {message}
+  </p>
 )}
-
 
       </div>
     </div>
