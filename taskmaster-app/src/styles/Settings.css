@@ -1,5 +1,5 @@
 .settings-container {
-    background-color: #f0f0f0;
+    background-color: linear-gradient(to bottom, #004080, #add8e6);
     height: 100vh;
     padding: 40px 20px;
     display: flex;
