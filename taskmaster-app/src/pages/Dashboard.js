@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Dashboard.css";
 import { useNavigate } from 'react-router-dom';
 import { FaCog, FaCheckCircle } from "react-icons/fa";
@@ -6,15 +6,25 @@ import { FaCog, FaCheckCircle } from "react-icons/fa";
 const Dashboard = () => {
     const navigate = useNavigate();
 
-    const [tasks, setTasks] = useState([
-        { id: 1, text: "Finish project report", completed: true },
-        { id: 2, text: "Workout gym", completed: false },
-        { id: 3, text: "Get groceries", completed: false },
-        { id: 4, text: "Go for walk", completed: false },
-      ]);
-      
+    // Load from localStorage or use default
+  const getInitialTasks = () => {
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [
+      { id: 1, text: "Finish project report", completed: true },
+      { id: 2, text: "Workout gym", completed: false },
+      { id: 3, text: "Get groceries", completed: false },
+      { id: 4, text: "Go for walk", completed: false },
+    ];
+  };
 
-  // 2. Toggle completed status
+  const [tasks, setTasks] = useState(getInitialTasks);
+
+  //Save to localStorage whenever tasks change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  // Toggle completed status
   const toggleTask = (id) => {
     const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, completed: !task.completed } : task
