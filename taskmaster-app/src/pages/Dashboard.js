@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Dashboard.css";
 import { useNavigate } from 'react-router-dom';
 import { FaCog, FaCheckCircle } from "react-icons/fa";
@@ -6,12 +6,21 @@ import { FaCog, FaCheckCircle } from "react-icons/fa";
 const Dashboard = () => {
     const navigate = useNavigate();
 
-  const tasks = [
-    { id: 1, text: "Finish project report", completed: true },
-    { id: 2, text: "Workout gym", completed: false },
-    { id: 3, text: "Get groceries", completed: false },
-    { id: 4, text: "Go for walk", completed: false },
-  ];
+    const [tasks, setTasks] = useState([
+        { id: 1, text: "Finish project report", completed: true },
+        { id: 2, text: "Workout gym", completed: false },
+        { id: 3, text: "Get groceries", completed: false },
+        { id: 4, text: "Go for walk", completed: false },
+      ]);
+      
+
+  // 2. Toggle completed status
+  const toggleTask = (id) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
 
   return (
     <div className="dashboard-container">
@@ -33,6 +42,7 @@ const Dashboard = () => {
           {tasks.map((task) => (
             <div
               key={task.id}
+              onClick={() => toggleTask(task.id)}
               className={`task-item ${task.completed ? "completed" : ""}`}
             >
               {task.completed ? (
