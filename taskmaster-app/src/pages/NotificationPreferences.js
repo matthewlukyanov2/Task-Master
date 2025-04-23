@@ -1,13 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import "../styles/Settings.css";
 
 function NotificationPreferences() {
-  const [dailyNotifications, setDailyNotifications] = useState(true);
-  const [taskDueAlerts, setTaskDueAlerts] = useState(true);
-  const [reminderTime, setReminderTime] = useState("09:00");
-  const [taskComplete, setTaskComplete] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(false);
 
+
+  // ✅ Initialize state from localStorage (before any useState)
+  const getInitialSettings = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("notificationSettings"));
+      return saved || {};
+    } catch {
+      return {};
+    }
+  };
+
+  const settings = getInitialSettings();
+
+  // ✅ Set initial state based on saved values
+  const [dailyNotifications, setDailyNotifications] = useState(
+    settings.dailyNotifications ?? true
+  );
+  const [taskDueAlerts, setTaskDueAlerts] = useState(
+    settings.taskDueAlerts ?? true
+  );
+  const [reminderTime, setReminderTime] = useState(
+    settings.reminderTime ?? "09:00"
+  );
+  const [taskComplete, setTaskComplete] = useState(
+    settings.taskComplete ?? false
+  );
+  const [emailNotifications, setEmailNotifications] = useState(
+    settings.emailNotifications ?? false
+  );
+
+  // ✅ Save to localStorage whenever settings change
+  useEffect(() => {
+    const settings = {
+      dailyNotifications,
+      taskDueAlerts,
+      reminderTime,
+      taskComplete,
+      emailNotifications,
+    };
+    localStorage.setItem("notificationSettings", JSON.stringify(settings));
+  }, [dailyNotifications, taskDueAlerts, reminderTime, taskComplete, emailNotifications]);
+
+    
   return (
     <div className="settings-container">
       <div className="settings-wrapper">
