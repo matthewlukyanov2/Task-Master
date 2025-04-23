@@ -39,6 +39,8 @@
     align-items: center;
     gap: 10px;
     font-weight: bold;
+    width: 100%;         
+  box-sizing: border-box;
   }
   
   .task-item.completed {

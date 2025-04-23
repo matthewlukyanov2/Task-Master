@@ -5,6 +5,9 @@ import { FaCog, FaCheckCircle } from "react-icons/fa";
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const [isDeleteMode, setIsDeleteMode] = useState(false);
+    const [message, setMessage] = useState(""); // for showing feedback
+
 
     // Load from localStorage or use default
   const getInitialTasks = () => {
@@ -40,9 +43,21 @@ const Dashboard = () => {
     }));
     setTasks(updatedTasks);
   };
-  
+
   const allTasksCompleted = tasks.length > 0 && tasks.every(task => task.completed);
 
+  const addTask = () => {
+    if (tasks.length >= 6) return;
+  
+    const newTask = {
+      id: Date.now(), 
+      text: "New Task",
+      completed: false
+    };
+  
+    setTasks([...tasks, newTask]);
+  };
+  
 
   return (
     <div className="dashboard-container">
@@ -61,11 +76,26 @@ const Dashboard = () => {
         <p style={{ fontWeight: "bold" }}>Here are your tasks for today.</p>
 
         <div className="task-list">
-          {tasks.map((task) => (
+        {tasks.map((task) => (
             <div
               key={task.id}
-              onClick={() => toggleTask(task.id)}
+              onClick={() => {
+                if (isDeleteMode) {
+                  const updated = tasks.filter(t => t.id !== task.id);
+                  setTasks(updated);
+                  setMessage("Task has been removed!");
+                } else {
+                  toggleTask(task.id);
+                }
+              }}
+              onMouseEnter={(e) => {
+                if (isDeleteMode) e.currentTarget.style.backgroundColor = "#ffcccc";
+              }}
+              onMouseLeave={(e) => {
+                if (isDeleteMode) e.currentTarget.style.backgroundColor = "white";
+              }}
               className={`task-item ${task.completed ? "completed" : ""}`}
+              style={{ cursor: isDeleteMode ? "pointer" : "default" }}
             >
               {task.completed ? (
                 <FaCheckCircle style={{ color: "green", fontSize: "1.2rem" }} />
@@ -91,9 +121,33 @@ const Dashboard = () => {
   {allTasksCompleted ? "Deselect All" : "Select All"}
 </p>
 
+{isDeleteMode ? (
+  <p
+    onClick={() => {
+      setIsDeleteMode(false);
+      setMessage("Leave task deletion");
+    }}
+    style={{ color: "red", textDecoration: "underline", cursor: "pointer" }}
+  >
+    Leave task deletion
+  </p>
+) : (
+  <p
+    onClick={() => setIsDeleteMode(true)}
+    style={{ color: "red", textDecoration: "underline", cursor: "pointer" }}
+  >
+    Delete Task
+  </p>
+)}
 
 
-        <div className="add-task-btn">+</div>
+
+<div className="add-task-btn" onClick={addTask}>+</div>
+{message && (
+  <p style={{ marginTop: "1rem", color: "#444", fontWeight: "bold" }}>{message}</p>
+)}
+
+
       </div>
     </div>
   );
