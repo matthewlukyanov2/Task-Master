@@ -23,6 +23,8 @@ const Dashboard = () => {
   };
 
   const [tasks, setTasks] = useState(getInitialTasks);
+  const [newTaskText, setNewTaskText] = useState("");
+
 
   //Save to localStorage whenever tasks change
   useEffect(() => {
@@ -69,16 +71,18 @@ const Dashboard = () => {
   const allTasksCompleted = tasks.length > 0 && tasks.every(task => task.completed);
 
   const addTask = () => {
-    if (tasks.length >= 6) return;
-  
-    const newTask = {
-      id: Date.now(), 
-      text: "New Task",
-      completed: false
-    };
-  
-    setTasks([...tasks, newTask]);
-  };
+        if (tasks.length >= 6 || newTaskText.trim() === "") return;
+      
+        const newTask = {
+          id: Date.now(),
+          text: newTaskText.trim(),
+          completed: false
+        };
+      
+        setTasks([...tasks, newTask]);
+        setNewTaskText(""); // Clear input after adding
+      };
+      
   
 
   return (
@@ -95,7 +99,25 @@ const Dashboard = () => {
         </div>
 
         <h2 style={{ marginTop: "1.5rem" }}>Welcome back, Matt! <span>⭐</span></h2>
-        <p style={{ fontWeight: "bold" }}>Here are your tasks for today.</p>
+        
+
+        <input
+  type="text"
+  className="task-input"
+  placeholder="Enter a new task..."
+  value={newTaskText}
+  onChange={(e) => setNewTaskText(e.target.value)}
+  disabled={tasks.length >= 6}
+/>
+
+{tasks.length >= 6 && (
+  <p style={{ color: "red", fontWeight: "bold", marginTop: "0.5rem" }}>
+    Sorry, 6 tasks max
+  </p>
+)}
+
+<p style={{ fontWeight: "bold" }}>Here are your tasks for today.</p>
+
 
         <div className="task-list">
         {tasks.map((task) => (
