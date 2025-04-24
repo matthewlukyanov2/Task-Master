@@ -18,6 +18,7 @@ const Login = () => {
       e.preventDefault();
       try {
         await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem('email', email);
         navigate('/dashboard');
       } catch (err) {
         setError('Invalid email or password.');

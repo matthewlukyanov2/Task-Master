@@ -11,6 +11,9 @@ const AccountSettings = () => {
 
   const [editingField, setEditingField] = useState(null); 
 
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
+
   // Load saved data from localStorage 
   useEffect(() => {
     const savedUsername = localStorage.getItem('username') || 'Matt';
@@ -30,13 +33,17 @@ const AccountSettings = () => {
     if (e.key === 'Enter') handleSave();
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
 
   return (
     <div className="settings-container">
       <div className="settings-wrapper">
         <div className="settings-header">
           <h1 className="logo">TaskMaster</h1>
-          <button className="back-button" onClick={() => navigate('/settings')}>←</button>
+          <button className="back-button" onClick={() => navigate(-1)}>←</button>
         </div>
 
         <h2>Settings</h2>
@@ -85,10 +92,55 @@ const AccountSettings = () => {
 
         <div className="section">
           <h3>Account Management</h3>
-          <p className="clickable">Log out</p>
+          <p className="clickable" onClick={() => setShowLogoutPopup(true)}>Log out</p>
           <p className="clickable">Delete Account</p>
         </div>
       </div>
+      {showLogoutPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h3>You would like to log out from <span style={{ color: '#8e44ad' }}>{username}</span>?</h3>
+            <label style={{ display: 'block', margin: '1rem 0' }}>
+              <input
+                type="checkbox"
+                checked={confirmLogout}
+                onChange={(e) => setConfirmLogout(e.target.checked)}
+              />
+              {" "}Yes, I want to log out.
+            </label>
+
+            <button
+              disabled={!confirmLogout}
+              onClick={handleLogout}
+              style={{
+                backgroundColor: confirmLogout ? '#e74c3c' : '#ccc',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: confirmLogout ? 'pointer' : 'not-allowed'
+              }}
+            >
+              Log out
+            </button>
+
+            <p
+              onClick={() => {
+                setShowLogoutPopup(false);
+                setConfirmLogout(false);
+              }}
+              style={{
+                marginTop: '1rem',
+                color: '#888',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }}
+            >
+              Cancel
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

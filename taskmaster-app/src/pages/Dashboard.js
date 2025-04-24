@@ -8,6 +8,8 @@ const Dashboard = () => {
     const [isDeleteMode, setIsDeleteMode] = useState(false);
     const [message, setMessage] = useState(""); // for showing feedback
     const [fadeOut, setFadeOut] = useState(false);
+    const [username, setUsername] = useState('');
+
 
 
 
@@ -25,6 +27,11 @@ const Dashboard = () => {
   const [tasks, setTasks] = useState(getInitialTasks);
   const [newTaskText, setNewTaskText] = useState("");
 
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username') || 'Matt';
+    setUsername(savedUsername);
+  }, []);
+  
 
   //Save to localStorage whenever tasks change
   useEffect(() => {
@@ -98,7 +105,8 @@ const Dashboard = () => {
 </button>
         </div>
 
-        <h2 style={{ marginTop: "1.5rem" }}>Welcome back, Matt! <span>⭐</span></h2>
+        <h2 style={{ marginTop: "1.5rem" }}>Welcome back, {username}! <span>⭐</span></h2>
+
         
 
         <input

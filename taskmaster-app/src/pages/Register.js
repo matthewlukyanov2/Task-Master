@@ -31,7 +31,8 @@ const Register = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      // Optionally: Save username to Firestore or Firebase profile
+      localStorage.setItem('username', username);
+localStorage.setItem('email', email);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
@@ -41,7 +42,6 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-wrapper">
-        
         <button onClick={() => navigate('/')} style={{ marginBottom: "1rem" }}>← Back</button>
         <h1 className="logo">TaskMaster</h1>
         <h3>Create your account!</h3>
