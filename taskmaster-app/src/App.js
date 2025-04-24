@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import AccountSettings from './pages/AccountSettings';
 import NotificationPreferences from './pages/NotificationPreferences';
 import Appearance from './pages/Appearance';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/settings/account" element={<AccountSettings />} />
         <Route path="/settings/appearance" element={<Appearance />} />
         <Route path="/settings/notifications" element={<NotificationPreferences />} />
+        <Route path="/forgot-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

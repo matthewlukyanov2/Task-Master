@@ -3,8 +3,7 @@ import "../styles/Settings.css";
 
 function NotificationPreferences() {
 
-
-  // ✅ Initialize state from localStorage (before any useState)
+  // Initialize state from localStorage (before any useState)
   const getInitialSettings = () => {
     try {
       const saved = JSON.parse(localStorage.getItem("notificationSettings"));
@@ -16,7 +15,7 @@ function NotificationPreferences() {
 
   const settings = getInitialSettings();
 
-  // ✅ Set initial state based on saved values
+  // Set initial state based on saved values
   const [dailyNotifications, setDailyNotifications] = useState(
     settings.dailyNotifications ?? true
   );
@@ -33,7 +32,7 @@ function NotificationPreferences() {
     settings.emailNotifications ?? false
   );
 
-  // ✅ Save to localStorage whenever settings change
+  // Save to localStorage whenever settings change
   useEffect(() => {
     const settings = {
       dailyNotifications,

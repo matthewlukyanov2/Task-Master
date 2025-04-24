@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "../firebase";
 import '../styles/Login.css'; 
@@ -64,8 +64,8 @@ const Login = () => {
           </div>
   
           <p className="forgot-link">
-            <a href="/forgot-password">Forgot password?</a>
-          </p>
+  <Link to="/forgot-password">Forgot password?</Link>
+</p>
   
           {error && <p className="error">{error}</p>}
   
