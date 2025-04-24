@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Settings.css'; 
 import { FaEdit } from 'react-icons/fa';
 
 const AccountSettings = () => {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+
+  const [editingField, setEditingField] = useState(null); 
+
+  // Load saved data from localStorage 
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username') || 'Matt';
+    const savedEmail = localStorage.getItem('email') || 'matt@gmail.com';
+    setUsername(savedUsername);
+    setEmail(savedEmail);
+  }, []);
+
+  // Save to localStorage on change
+  const handleSave = () => {
+    localStorage.setItem('username', username);
+    localStorage.setItem('email', email);
+    setEditingField(null);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') handleSave();
+  };
+
 
   return (
     <div className="settings-container">
