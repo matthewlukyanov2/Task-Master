@@ -10,12 +10,7 @@ function Home() {
   <div className="home-wrapper">
     <header className="home-header">
       <h1>TaskMaster</h1>
-      <button
-  className="settings-icon"
-  onClick={() => navigate('/settings', { state: { from: '/' } })}
->
-  ⚙️
-</button>
+      
     </header>
 
     <main className="home-main">

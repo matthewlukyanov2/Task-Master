@@ -44,12 +44,38 @@ const AccountSettings = () => {
         <div className="section">
           <h3>Profile Information</h3>
           <p>
-            <strong>Username</strong> &nbsp; Matt &nbsp;
-            <FaEdit className="edit-icon" />
+            <strong>Username</strong> &nbsp;
+            {editingField === 'username' ? (
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onBlur={handleSave}
+                onKeyDown={handleKeyDown}
+                autoFocus
+              />
+            ) : (
+              <>
+                {username} &nbsp;
+                <FaEdit className="edit-icon" onClick={() => setEditingField('username')} />
+              </>
+            )}
           </p>
           <p>
-            <strong>Email Address</strong> &nbsp; matt@gmail.com &nbsp;
-            <FaEdit className="edit-icon" />
+            <strong>Email Address</strong> &nbsp;
+            {editingField === 'email' ? (
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={handleSave}
+                onKeyDown={handleKeyDown}
+                autoFocus
+              />
+            ) : (
+              <>
+                {email} &nbsp;
+                <FaEdit className="edit-icon" onClick={() => setEditingField('email')} />
+              </>
+            )}
           </p>
           <p>
             <strong>Password</strong> &nbsp;
