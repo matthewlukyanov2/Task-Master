@@ -17,6 +17,11 @@ function Home() {
       <h2>Welcome to the TaskMaster App!</h2>
       <p>Where your tasks are kept tidy and concise</p>
 
+      <h1 className="logo">
+  TaskMaster <span className="flashing-icon">✅</span>
+</h1>
+
+
       <div className="home-buttons">
         <button onClick={() => navigate('/login')}>Log in ▶</button>
         <button onClick={() => navigate('/register')}>Register ▶</button>
