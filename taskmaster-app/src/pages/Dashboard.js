@@ -5,18 +5,16 @@ import { FaCog, FaCheckCircle } from "react-icons/fa";
 import { getAuth } from "firebase/auth"; 
 import { useSettings } from "../contexts/SettingsContext";
 
+// Dashboard component responsible for displaying the dashboard of the application, where users can manage their tasks.
 const Dashboard = () => {
     const navigate = useNavigate();
     const [isDeleteMode, setIsDeleteMode] = useState(false);
-    const [message, setMessage] = useState(""); // for showing feedback
+    const [message, setMessage] = useState(""); 
     const [fadeOut, setFadeOut] = useState(false);
     const [username, setUsername] = useState('');
     const { yellowMode, fontStyle } = useSettings();
 
-
-
-
-    // Load from localStorage or use default
+    // Load saved data from localStorage or set default tasks
   const getInitialTasks = () => {
     const saved = localStorage.getItem("tasks");
     return saved ? JSON.parse(saved) : [
@@ -27,9 +25,11 @@ const Dashboard = () => {
     ];
   };
 
+  // Set initial state based on saved values
   const [tasks, setTasks] = useState(getInitialTasks);
   const [newTaskText, setNewTaskText] = useState("");
 
+  // Load username from Firebase Auth
   useEffect(() => {
     const auth = getAuth();
   const currentUser = auth.currentUser;
@@ -64,7 +64,8 @@ const Dashboard = () => {
   }, [message]);
   
 
-  // Toggle completed status
+  // toggleTask function to mark tasks as completed or not
+  // called when a task is clicked
   const toggleTask = (id) => {
     const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -72,6 +73,17 @@ const Dashboard = () => {
     setTasks(updatedTasks);
   };
 
+  // togglePriority function to mark tasks as priority or not
+  // toggles the priority state of a task when the star button is clicked
+  const togglePriority = (id) => {
+    const updatedTasks = tasks.map(task =>
+        task.id === id ? { ...task, priority: !task.priority } : task
+    );
+    setTasks(updatedTasks);
+};
+
+  // toggleAllTasks function to mark all tasks as completed or not    
+  // checks if all tasks are completed and toggles their state
   const toggleAllTasks = () => {
     const allCompleted = tasks.every(task => task.completed);
     const updatedTasks = tasks.map(task => ({
@@ -81,15 +93,20 @@ const Dashboard = () => {
     setTasks(updatedTasks);
   };
 
+  // Check if all tasks are completed 
+  // this is used to prevent adding new tasks if all existing tasks are completed
   const allTasksCompleted = tasks.length > 0 && tasks.every(task => task.completed);
 
+  // addTask function to add a new task to the list
+  // it checks if the task limit is reached and if the input is not empty
   const addTask = () => {
         if (tasks.length >= 6 || newTaskText.trim() === "") return;
       
         const newTask = {
           id: Date.now(),
           text: newTaskText.trim(),
-          completed: false
+          completed: false,
+          priority: false,
         };
       
         setTasks([...tasks, newTask]);
@@ -97,7 +114,7 @@ const Dashboard = () => {
       };
       
   
-
+ // render the dashboard component
   return (
     <div className="dashboard-container">
       <div
@@ -174,6 +191,30 @@ const Dashboard = () => {
                 />
               )}
               {task.text}
+              {/* Priority star button */}
+              <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    togglePriority(task.id);
+                                }}
+                                style={{
+                                  marginLeft: "auto",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "1rem", 
+    padding: 0,
+    display: "inline-flex", 
+    alignItems: "center",
+    justifyContent: "center",
+    height: "auto", 
+    width: "auto",  
+    lineHeight: 1,  
+    flexShrink: 0,
+                                }}
+                            >
+                                {task.priority ? "⭐" : "☆"}
+                            </button>
             </div>
           ))}
         </div>

@@ -5,6 +5,7 @@ import '../styles/Settings.css';
 import { FaEdit } from 'react-icons/fa';
 import { getAuth, signOut, deleteUser } from "firebase/auth";
 
+// AccountSettings component responsible for displaying and managing user account settings.
 const AccountSettings = () => {
   const navigate = useNavigate();
 

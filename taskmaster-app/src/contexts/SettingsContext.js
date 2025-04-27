@@ -4,6 +4,8 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 const SettingsContext = createContext();
 
 // Provider component
+// This component wraps around the part of the app that needs access to the context
+// It provides the context value to all its children
 export const SettingsProvider = ({ children }) => {
   const [yellowMode, setYellowMode] = useState(() => {
     const saved = localStorage.getItem("yellowMode");

@@ -18,6 +18,8 @@ function NotificationPreferences() {
   const settings = getInitialSettings();
 
   // Set initial state based on saved values
+  // Using nullish coalescing operator (??) to set default values
+  // If localStorage is empty, use default values
   const [dailyNotifications, setDailyNotifications] = useState(
     settings.dailyNotifications ?? true
   );
@@ -35,6 +37,7 @@ function NotificationPreferences() {
   );
 
   // Save to localStorage whenever settings change
+  // Using useEffect to save settings to localStorage
   useEffect(() => {
     const settings = {
       dailyNotifications,

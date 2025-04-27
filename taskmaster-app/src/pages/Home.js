@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
+// Home component responsible for displaying the home page of the application where users can log in or register.
 function Home() {
   const navigate = useNavigate();
 
