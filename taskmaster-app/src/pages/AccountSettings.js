@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Settings.css'; 
 import { FaEdit } from 'react-icons/fa';
+import { getAuth, signOut } from "firebase/auth";
 
 const AccountSettings = () => {
   const navigate = useNavigate();
@@ -16,10 +17,13 @@ const AccountSettings = () => {
 
   // Load saved data from localStorage 
   useEffect(() => {
-    const savedUsername = localStorage.getItem('username') || 'Matt';
-    const savedEmail = localStorage.getItem('email') || 'matt@gmail.com';
-    setUsername(savedUsername);
-    setEmail(savedEmail);
+    const auth = getAuth();
+  const currentUser = auth.currentUser;
+
+  if (currentUser) {
+    setUsername(currentUser.displayName || currentUser.email.split('@')[0]);
+    setEmail(currentUser.email);
+  }
   }, []);
 
   // Save to localStorage on change
@@ -34,8 +38,15 @@ const AccountSettings = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
+    const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      localStorage.clear();
+      navigate('/');
+    })
+    .catch((error) => {
+      console.error('Logout error:', error);
+    });
   };
 
   return (

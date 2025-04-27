@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Dashboard.css";
 import { useNavigate } from 'react-router-dom';
 import { FaCog, FaCheckCircle } from "react-icons/fa";
+import { getAuth } from "firebase/auth"; 
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -28,8 +29,11 @@ const Dashboard = () => {
   const [newTaskText, setNewTaskText] = useState("");
 
   useEffect(() => {
-    const savedUsername = localStorage.getItem('username') || 'Matt';
-    setUsername(savedUsername);
+    const auth = getAuth();
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    setUsername(currentUser.displayName || currentUser.email.split('@')[0]);
+  }
   }, []);
   
 
