@@ -45,6 +45,7 @@ const Dashboard = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // this effect is used to handle the fade-out animation for the message
   useEffect(() => {
     if (message) {
       // Start fading after 2.5s

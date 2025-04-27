@@ -2,6 +2,8 @@ import React, { useState, useEffect  } from "react";
 import { useSettings } from "../contexts/SettingsContext";
 import "../styles/Settings.css";
 
+// this function is used to create the settings page for the app
+// it uses the useSettings hook to get the settings from the context
 function NotificationPreferences() {
   const { yellowMode, fontStyle } = useSettings();
 

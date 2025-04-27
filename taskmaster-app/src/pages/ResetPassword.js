@@ -4,11 +4,14 @@ import { auth } from "../firebase";
 import { Link } from "react-router-dom";
 import "../styles/Login.css"; // Reuse your login page styling
 
+// ResetPassword component responsible for sending a password reset email to the user
+// It uses Firebase Authentication to send the reset email to the provided email address
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  // handleReset function is called when the user submits the reset password form
   const handleReset = async (e) => {
     e.preventDefault();
     try {

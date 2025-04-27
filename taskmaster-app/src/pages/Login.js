@@ -4,6 +4,8 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "../firebase";
 import '../styles/Login.css'; 
 
+// Login component responsible for user authentication and login functionality
+// It uses Firebase Authentication to sign in users with their email and password
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,9 +13,11 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
   
+    // useNavigate hook is used to navigate to different routes when buttons are clicke
     const navigate = useNavigate();
-    //const auth = getAuth();
   
+    // this function is called when the user submits the login form
+    // It uses Firebase Authentication to sign in the user with their email and password
     const handleLogin = async (e) => {
       e.preventDefault();
       try {

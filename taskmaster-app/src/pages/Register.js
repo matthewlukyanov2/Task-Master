@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import '../styles/Register.css';
 
+// Register component responsible for user registration
+// It uses Firebase Authentication to create a new user with email and password
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -16,9 +18,12 @@ const Register = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
+  // this function is called when the user submits the registration form
+  // It uses Firebase Authentication to create a new user with their email and password
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // if statements to validate the input fields
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;
@@ -28,7 +33,8 @@ const Register = () => {
       setError("You must agree to the terms of service");
       return;
     }
-
+   
+    // if the input fields are valid, it tries to create a new user with the provided email and password
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       localStorage.setItem('username', username);

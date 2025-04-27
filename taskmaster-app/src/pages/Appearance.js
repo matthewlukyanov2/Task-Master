@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSettings } from "../contexts/SettingsContext"; 
 import "../styles/Settings.css";
 
+// this function is used to create the settings page for the app
+// it uses the useSettings hook to get the settings from the context
 function Appearance() {
   const { yellowMode, setYellowMode, fontStyle, setFontStyle } = useSettings();
   // Add the profilePic state
@@ -11,6 +13,8 @@ function Appearance() {
 
 
   // Save settings when they change
+  // this function is used to save the settings to local storage
+  // it uses the useEffect hook to save the settings when they change
   useEffect(() => {
     const saveSettings = setTimeout(() => {
       localStorage.setItem('yellowMode', yellowMode);
@@ -23,7 +27,8 @@ function Appearance() {
     return () => clearTimeout(saveSettings); // cancel previous if user keeps changing
   }, [yellowMode, fontStyle, profilePic]);
   
-
+ // this function is used to handle the image upload
+  // it uses the FileReader API to read the image file and set the profilePic state
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -35,6 +40,7 @@ function Appearance() {
     }
   };
 
+  // returns the settings page with the respective settings
   return (
     <div className="settings-container">
       <div className="settings-wrapper"

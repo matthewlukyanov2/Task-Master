@@ -3,6 +3,7 @@ import { useSettings } from "../contexts/SettingsContext";
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Settings.css';
 
+// Uses the useSettings context to get the current settings and applies them to the component's style.
 const Settings = () => {
   const navigate = useNavigate();
   const location = useLocation();

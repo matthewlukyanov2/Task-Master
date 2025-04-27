@@ -9,6 +9,7 @@ import { getAuth, signOut, deleteUser } from "firebase/auth";
 const AccountSettings = () => {
   const navigate = useNavigate();
 
+// these are the states for storing respective values
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
 
@@ -24,10 +25,13 @@ const AccountSettings = () => {
 
 
   // Load saved data from localStorage 
+  // this function is called when the component mounts and it retrieves the username and email from Firebase Auth
   useEffect(() => {
     const auth = getAuth();
   const currentUser = auth.currentUser;
 
+  // Check if user is logged in
+  // If logged in, set username and email from Firebase Auth
   if (currentUser) {
     setUsername(currentUser.displayName || currentUser.email.split('@')[0]);
     setEmail(currentUser.email);
@@ -35,16 +39,19 @@ const AccountSettings = () => {
   }, []);
 
   // Save to localStorage on change
+  // This function is called when the user presses enter or clicks outside the input field.
   const handleSave = () => {
     localStorage.setItem('username', username);
     localStorage.setItem('email', email);
     setEditingField(null);
   };
-
+  // This function is called when the user presses a key while editing the username or email field.
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') handleSave();
   };
 
+  // This function is called when the user clicks the logout button.
+  // It clears the local storage and navigates back to the homepage.
   const handleLogout = () => {
     const auth = getAuth();
   signOut(auth)
@@ -57,10 +64,13 @@ const AccountSettings = () => {
     });
   };
 
+  // This function is called when the user clicks the delete account button.
+  // It deletes the user account from Firebase Auth and clears the local storage.
   const handleDeleteAccount = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
   
+    // Check if user is logged in
     if (user) {
       try {
         await deleteUser(user);
@@ -73,7 +83,7 @@ const AccountSettings = () => {
     }
   };
   
-
+  // Contains the header, profile information, and account management sections.
   return (
     <div className="settings-container">
       <div

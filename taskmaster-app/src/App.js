@@ -13,6 +13,7 @@ import NotificationPreferences from './pages/NotificationPreferences';
 import Appearance from './pages/Appearance';
 import ResetPassword from './pages/ResetPassword';
 
+// this function is the main entry point of the application It uses React Router to define the routes for the application.
 function App() {
   return (
     <SettingsProvider>

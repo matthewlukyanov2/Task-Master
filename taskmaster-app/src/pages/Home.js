@@ -4,6 +4,8 @@ import '../styles/Home.css';
 
 // Home component responsible for displaying the home page of the application where users can log in or register.
 function Home() {
+  
+  // useNavigate hook is used to navigate to different routes when buttons are clicked.
   const navigate = useNavigate();
 
   return (
