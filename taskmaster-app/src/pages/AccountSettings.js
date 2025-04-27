@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Settings.css'; 
 import { FaEdit } from 'react-icons/fa';
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 
 const AccountSettings = () => {
   const navigate = useNavigate();
@@ -14,6 +14,10 @@ const AccountSettings = () => {
 
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
+
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
 
   // Load saved data from localStorage 
   useEffect(() => {
@@ -48,6 +52,23 @@ const AccountSettings = () => {
       console.error('Logout error:', error);
     });
   };
+
+  const handleDeleteAccount = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    if (user) {
+      try {
+        await deleteUser(user);
+        localStorage.clear();
+        navigate('/'); // send back to homepage or login
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        alert("Error deleting account: " + error.message);
+      }
+    }
+  };
+  
 
   return (
     <div className="settings-container">
@@ -104,9 +125,55 @@ const AccountSettings = () => {
         <div className="section">
           <h3>Account Management</h3>
           <p className="clickable" onClick={() => setShowLogoutPopup(true)}>Log out</p>
-          <p className="clickable">Delete Account</p>
+          <p className="clickable" onClick={() => setShowDeletePopup(true)}>Delete Account</p>
         </div>
       </div>
+      {showDeletePopup && (
+  <div className="popup-overlay">
+    <div className="popup">
+      <h3>Are you sure you want to delete your account <span style={{ color: '#e74c3c' }}>{username}</span>?</h3>
+      <label style={{ display: 'block', margin: '1rem 0' }}>
+        <input
+          type="checkbox"
+          checked={confirmDelete}
+          onChange={(e) => setConfirmDelete(e.target.checked)}
+        />
+        {" "}Yes, permanently delete my account.
+      </label>
+
+      <button
+        disabled={!confirmDelete}
+        onClick={handleDeleteAccount}
+        style={{
+          backgroundColor: confirmDelete ? '#e74c3c' : '#ccc',
+          color: 'white',
+          padding: '0.5rem 1rem',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: confirmDelete ? 'pointer' : 'not-allowed'
+        }}
+      >
+        Delete Account
+      </button>
+
+      <p
+        onClick={() => {
+          setShowDeletePopup(false);
+          setConfirmDelete(false);
+        }}
+        style={{
+          marginTop: '1rem',
+          color: '#888',
+          cursor: 'pointer',
+          textDecoration: 'underline'
+        }}
+      >
+        Cancel
+      </p>
+    </div>
+  </div>
+)}
+
       {showLogoutPopup && (
         <div className="popup-overlay">
           <div className="popup">
