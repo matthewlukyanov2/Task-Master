@@ -3,6 +3,7 @@ import "../styles/Dashboard.css";
 import { useNavigate } from 'react-router-dom';
 import { FaCog, FaCheckCircle } from "react-icons/fa";
 import { getAuth } from "firebase/auth"; 
+import { useSettings } from "../contexts/SettingsContext";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Dashboard = () => {
     const [message, setMessage] = useState(""); // for showing feedback
     const [fadeOut, setFadeOut] = useState(false);
     const [username, setUsername] = useState('');
+    const { yellowMode, fontStyle } = useSettings();
 
 
 
@@ -98,7 +100,13 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-wrapper">
+      <div
+    className="dashboard-wrapper"
+    style={{
+      backgroundColor: yellowMode ? "#fffacd" : "#add8e6",
+      fontFamily: fontStyle,
+    }}
+  >
         <div className="dashboard-header">
           <span className="logo">TaskMaster</span>
           <button

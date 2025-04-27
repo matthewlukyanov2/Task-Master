@@ -41,6 +41,7 @@
     font-weight: bold;
     width: 100%;         
   box-sizing: border-box;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
   }
   
   .task-item.completed {
@@ -84,6 +85,16 @@
   border-radius: 8px;
   box-sizing: border-box;
   word-break: break-word;
+  }
+  
+  .task-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .task-item.important {
+    background-color: #fff8dc; /* Light gold background */
+    border-left: 5px solid gold;
   }
   
   

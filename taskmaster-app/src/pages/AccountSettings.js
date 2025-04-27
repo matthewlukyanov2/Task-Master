@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSettings } from "../contexts/SettingsContext";
 import '../styles/Settings.css'; 
 import { FaEdit } from 'react-icons/fa';
 import { getAuth, signOut, deleteUser } from "firebase/auth";
@@ -17,6 +18,8 @@ const AccountSettings = () => {
 
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const { yellowMode, fontStyle } = useSettings();
 
 
   // Load saved data from localStorage 
@@ -72,7 +75,13 @@ const AccountSettings = () => {
 
   return (
     <div className="settings-container">
-      <div className="settings-wrapper">
+      <div
+    className="settings-wrapper"
+    style={{
+      backgroundColor: yellowMode ? "#fffacd" : "#add8e6", 
+      fontFamily: fontStyle
+    }}
+  >
         <div className="settings-header">
           <h1 className="logo">TaskMaster</h1>
           <button className="back-button" onClick={() => navigate(-1)}>←</button>

@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSettings } from "../contexts/SettingsContext"; 
 import "../styles/Settings.css";
 
 function Appearance() {
-  const [yellowMode, setYellowMode] = useState(false);
-  const [fontStyle, setFontStyle] = useState("Calibri");
-  const [profilePic, setProfilePic] = useState(null);
+  const { yellowMode, setYellowMode, fontStyle, setFontStyle } = useSettings();
+  // Add the profilePic state
+  const [profilePic, setProfilePic] = useState(() => {
+    return localStorage.getItem("profilePic") || null;
+  });
+
+
+  // Save settings when they change
+  useEffect(() => {
+    const saveSettings = setTimeout(() => {
+      localStorage.setItem('yellowMode', yellowMode);
+      localStorage.setItem('fontStyle', fontStyle);
+      if (profilePic) {
+        localStorage.setItem('profilePic', profilePic);
+      }
+    }, 300); // waits 300ms before saving
+  
+    return () => clearTimeout(saveSettings); // cancel previous if user keeps changing
+  }, [yellowMode, fontStyle, profilePic]);
+  
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setProfilePic(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result); 
+      };
+      reader.readAsDataURL(file);
     }
   };
 

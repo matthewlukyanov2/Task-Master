@@ -1,7 +1,9 @@
 import React, { useState, useEffect  } from "react";
+import { useSettings } from "../contexts/SettingsContext";
 import "../styles/Settings.css";
 
 function NotificationPreferences() {
+  const { yellowMode, fontStyle } = useSettings();
 
   // Initialize state from localStorage (before any useState)
   const getInitialSettings = () => {
@@ -47,7 +49,13 @@ function NotificationPreferences() {
     
   return (
     <div className="settings-container">
-      <div className="settings-wrapper">
+      <div
+    className="settings-wrapper"
+    style={{
+      backgroundColor: yellowMode ? "#fffacd" : "#add8e6", 
+      fontFamily: fontStyle
+    }}
+  >
         <div className="settings-header">
           <h2 className="logo">TaskMaster</h2>
           <button className="back-button" onClick={() => window.history.back()}>

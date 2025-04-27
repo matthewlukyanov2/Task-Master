@@ -1,15 +1,23 @@
 import React from 'react';
+import { useSettings } from "../contexts/SettingsContext";
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Settings.css';
 
 const Settings = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { yellowMode, fontStyle } = useSettings();
   const from = location.state?.from || '/';
 
   return (
     <div className="settings-container">
-      <div className="settings-wrapper">
+      <div
+    className="settings-wrapper"
+    style={{
+      backgroundColor: yellowMode ? "#fffacd" : "#add8e6",
+      fontFamily: fontStyle
+    }}
+  >
         <div className="settings-header">
           <h1 className="logo">TaskMaster</h1>
           <button className="back-button" onClick={() => navigate(from)}>←</button>

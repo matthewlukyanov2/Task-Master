@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SettingsProvider } from "./contexts/SettingsContext";
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,6 +15,7 @@ import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
+    <SettingsProvider>
     <Router>
       <Routes>
       <Route path="/" element={<Home />} />
@@ -27,6 +29,7 @@ function App() {
         <Route path="/forgot-password" element={<ResetPassword />} />
       </Routes>
     </Router>
+    </SettingsProvider>
   );
 }
 
